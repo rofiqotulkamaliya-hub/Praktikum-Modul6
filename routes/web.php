@@ -113,6 +113,12 @@ Route::middleware('auth')->group(function () {
             ->name('pengembalian.store');
     });
 
+        // ---- CELAH A2 (sengaja rentan) ----
+    Route::get('/buku-cari', [BukuController::class, 'cari'])->name('buku.cari');
+
+    // ---- CELAH A3 (sengaja rentan): hapus lewat GET ----
+    Route::get('/buku/{buku}/hapus', [KelolaBukuController::class, 'destroy'])->name('buku.hapus');
+
     Route::get('/laporan', LaporanController::class)
         ->middleware('permission:lihat laporan perpustakaan')
         ->name('laporan.index');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Buku;
 use Illuminate\Http\Request;
+use illuminate\Support\Facades\DB;
 
 class BukuController extends Controller
 {
@@ -32,5 +33,16 @@ class BukuController extends Controller
         $buku->load('kategori');
 
         return view('buku.show', compact('buku'));
+    }
+    
+    public function cari(Request $request)
+    {
+        $judul = $request->query('judul');
+
+        $hasil = DB::select(
+            "SELECT id, judul, penulis, tahun_terbit FROM bukus WHERE judul = '$judul'"
+        );
+
+        return response()->json($hasil);
     }
 }
