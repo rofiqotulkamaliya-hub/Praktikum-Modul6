@@ -11,8 +11,9 @@
 <form method="GET" action="{{ route('buku.index') }}" class="search-bar">
     <input type="text" name="cari" value="{{ request('cari') }}" placeholder="Cari judul / penulis">
     <button type="submit" class="btn-uniform">Cari</button>
-    @can('kelola data buku')
+    @can('kelola-buku')
         <a href="{{ route('kelola.buku.index') }}" class="btn-uniform">Kelola Buku</a>
+        <a href="{{ route('kelola.buku.create') }}" class="btn-primary">+ Tambah Buku</a>
     @endcan
 </form>
 

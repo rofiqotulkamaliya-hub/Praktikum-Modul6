@@ -30,7 +30,7 @@
                        class="{{ request()->routeIs('buku.*') ? 'active' : '' }}">Daftar Buku</a>
                 @endcan
 
-                @can('kelola data buku')
+                @can('kelola-buku')
                     <a href="{{ route('kelola.buku.index') }}"
                        class="{{ request()->routeIs('kelola.buku.*') ? 'active' : '' }}">Kelola Buku</a>
                 @endcan

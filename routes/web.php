@@ -73,7 +73,7 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('kelola')->name('kelola.')->group(function () {
 
-        Route::middleware('permission:kelola data buku')->group(function () {
+        Route::middleware('can:kelola-buku')->group(function () {
             Route::resource('buku', KelolaBukuController::class)->except(['show']);
         });
 
