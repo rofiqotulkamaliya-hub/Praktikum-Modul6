@@ -13,28 +13,15 @@ use App\Http\Controllers\PetugasController;
 use App\Http\Controllers\SiswaController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Halaman publik
-|--------------------------------------------------------------------------
-*/
+
 Route::get('/', function () {
-    // Pengguna yang sudah login langsung diarahkan ke dashboard-nya
     return auth()->check() ? redirect()->route('dashboard') : view('home');
 })->name('home');
 
-/*
-|--------------------------------------------------------------------------
-| Halaman yang WAJIB login (middleware auth)
-| Pembatasan lebih lanjut memakai middleware role / permission milik Spatie.
-|--------------------------------------------------------------------------
-*/
 Route::middleware('auth')->group(function () {
 
-    // Pintu masuk setelah login -> diarahkan sesuai role
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
 
-    // ---- Dashboard per role ----
     Route::get('/admin/dashboard', [AdminController::class, 'index'])
         ->middleware('permission:akses dashboard admin')
         ->name('admin.dashboard');
@@ -62,7 +49,6 @@ Route::middleware('auth')->group(function () {
             ->name('buku.show');
     });
 
-    // ---- Peminjaman milik sendiri (data difilter berdasarkan user yang login) ----
     Route::post('/peminjaman', [PeminjamanSayaController::class, 'store'])
         ->middleware('permission:mengajukan peminjaman buku')
         ->name('peminjaman.store');
@@ -85,7 +71,6 @@ Route::middleware('auth')->group(function () {
         ->whereNumber('peminjaman')
         ->name('peminjaman.show');
 
-    // ---- Operasional perpustakaan (admin & petugas) ----
     Route::prefix('kelola')->name('kelola.')->group(function () {
 
         Route::middleware('permission:kelola data buku')->group(function () {
@@ -113,11 +98,7 @@ Route::middleware('auth')->group(function () {
             ->name('pengembalian.store');
     });
 
-        // ---- CELAH A2 (sengaja rentan) ----
     Route::get('/buku-cari', [BukuController::class, 'cari'])->name('buku.cari');
-
-    // ---- CELAH A3 (sengaja rentan): hapus lewat GET ----
-    Route::get('/buku/{buku}/hapus', [KelolaBukuController::class, 'destroy'])->name('buku.hapus');
 
     Route::get('/laporan', LaporanController::class)
         ->middleware('permission:lihat laporan perpustakaan')
