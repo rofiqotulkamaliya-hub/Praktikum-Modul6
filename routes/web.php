@@ -34,14 +34,12 @@ Route::middleware('auth')->group(function () {
         ->middleware('role:siswa')
         ->name('siswa.dashboard');
 
-    // ---- Kelola data pengguna & role (khusus admin) ----
     Route::middleware('permission:kelola data pengguna')->group(function () {
         Route::resource('admin/users', UserController::class)
             ->except(['show'])
             ->names('admin.users');
     });
 
-    // ---- Daftar & detail buku (semua role) ----
     Route::middleware('permission:lihat daftar buku')->group(function () {
         Route::get('/buku', [BukuController::class, 'index'])->name('buku.index');
         Route::get('/buku/{buku}', [BukuController::class, 'show'])

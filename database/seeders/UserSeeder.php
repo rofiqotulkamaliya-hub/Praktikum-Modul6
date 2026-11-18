@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class UserSeeder extends Seeder
 {
@@ -14,6 +15,8 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
+        $passwordAdmin = env('SEED_ADMIN_PASSWORD') ?: Str::random(20);
+
         $akun = [
             ['Administrator', 'admin@gmail.com', 'admin'],
             ['Petugas Perpustakaan', 'petugas@gmail.com', 'petugas'],
@@ -22,9 +25,11 @@ class UserSeeder extends Seeder
         ];
 
         foreach ($akun as [$nama, $email, $role]) {
-            $user = User::firstOrCreate(
+            $password = $email === 'admin@gmail.com' ? $passwordAdmin : 'password';
+
+            $user = User::updateOrCreate(
                 ['email' => $email],
-                ['name' => $nama, 'password' => Hash::make('password')]
+                ['name' => $nama, 'password' => Hash::make($password)]
             );
 
             $user->syncRoles([$role]);
