@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Buku;
 use Illuminate\Http\Request;
-use illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\DB;
 
 class BukuController extends Controller
 {
@@ -34,7 +34,7 @@ class BukuController extends Controller
 
         return view('buku.show', compact('buku'));
     }
-    
+
     public function cari(Request $request)
     {
         $judul = $request->query('judul');

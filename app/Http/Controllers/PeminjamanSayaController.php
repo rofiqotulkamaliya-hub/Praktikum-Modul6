@@ -44,9 +44,9 @@ class PeminjamanSayaController extends Controller
      * Detail satu peminjaman. Dicek lewat PeminjamanPolicy:
      * siswa hanya boleh melihat miliknya sendiri, selain itu 403.
      */
-    public function show(Peminjaman $peminjaman)
+    public function show($peminjaman)
     {
-        $peminajaman = Peminjaman::findOrFail($peminjaman);
+        $peminjaman = Peminjaman::findOrFail($peminjaman);
         
         $peminjaman->load(['buku.kategori', 'anggota']);
 
