@@ -13,7 +13,6 @@
     <button type="submit" class="btn-uniform">Cari</button>
     @can('kelola-buku')
         <a href="{{ route('kelola.buku.index') }}" class="btn-uniform">Kelola Buku</a>
-        <a href="{{ route('kelola.buku.create') }}" class="btn-primary">+ Tambah Buku</a>
     @endcan
 </form>
 
